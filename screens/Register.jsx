@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { Picker } from '@react-native-picker/picker'
 import { auth, db } from '../firebaseConfig'
 import { collection, addDoc } from 'firebase/firestore'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect } from 'react'
 
 const validateEmail = (email) => {
@@ -19,20 +19,6 @@ const Register = ({ navigation }) => {
 	const [password, setPassword] = useState('')
 	const [college, setCollege] = useState('Shree L.R. Tiwari College')
 	const [grade, setGrade] = useState('5th')
-	const addData = () => {
-		if(!auth.currentUser) return;
-		addDoc(collection(db, "users"), {
-			uid: auth.currentUser.uid,
-			name: name,
-			email: email,
-			college: college,
-			grade: grade
-		}).then(docRef => {
-			alert('Your account has been created successfully!')
-		}).catch(err => {
-			alert(`Error : ${err.message}`)
-		})
-	}
 	const handleRegister = async () => {
 		if(name.trim().length < 3){
 			alert('Name can\'t be less than 3 characters')
@@ -44,13 +30,23 @@ const Register = ({ navigation }) => {
 		}
 		createUserWithEmailAndPassword(auth, email, password)
 		.then((user) => {
+			try{
+				addDoc(collection(db, "users"), {
+					uid: user.user.uid,
+					name: name,
+					email: email,
+					college: college,
+					grade: grade
+				})
+			}catch(e){
+				alert(`Something went wrong! ${e.message}`)
+			}
 			alert('your account has been created successfully!')
 		})
 		.catch(err => {
 			alert(err.message)
 			return;
 		})
-		addData()
 	}
 	return(
 		<View style={styles.container}>

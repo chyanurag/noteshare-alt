@@ -57,12 +57,12 @@ const Register = ({ navigation }) => {
 				<TextInput style={styles.input} onChangeText={setName} placeholder={"Enter your full name"}/>
 				<TextInput style={styles.input} onChangeText={setEmail} keyboardType="email-address" placeholder={"Enter your email"}/>
 				<TextInput style={styles.input} onChangeText={setPassword} secureTextEntry={true} placeholder={"Choose a password"}/>
-				<Picker style={styles.input} mode="dialog" selectedValue={college} onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}>
+				<Picker prompt="Select your College" style={styles.input} mode="dialog" selectedValue={college} onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}>
 					<Picker.Item label="Shree L.R. Tiwari College" value="Shree L.R Tiwari College"/>
 					<Picker.Item label="Thakur College of Engineering" value="Thakur College of Engineering"/>
 					<Picker.Item label="D.J. Sangvi College of Engineering" value="D.J. Sangvi College of Engineering"/>
 				</Picker>
-				<Picker style={styles.input} mode="dialog" mode="dialog" selectedValue={grade} onValueChange={(itemValue, itemIndex) => setGrade(itemValue)}>
+				<Picker prompt="Select Your Grade" style={styles.input} mode="dialog" mode="dialog" selectedValue={grade} onValueChange={(itemValue, itemIndex) => setGrade(itemValue)}>
 					<Picker.Item label="5th" value="5"/>
 					<Picker.Item label="6th" value="6"/>
 					<Picker.Item label="7th" value="7"/>

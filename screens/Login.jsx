@@ -1,28 +1,51 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { auth } from '../firebaseConfig.js'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
-const Login = () => {
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+
+const Login = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const handleLogin = () => {
-		alert(email)
+	const handleLogin = async () => {
+		if(!validateEmail(email)){
+			alert('Please input a valid email')
+			return;
+		}
+		if(password.length === ''){
+			alert('Password can\'t be empty')
+			return;
+		}
+		signInWithEmailAndPassword(auth, email, password).then(res => {
+			alert('You\'ve been logged in successfully!')
+		})
+		.catch(err => {
+			alert(err.message)
+		})
 	}
   return (
     <View style={styles.container}>
 		<Text style={styles.text}>NoteShare</Text>
 	  	<View style={styles.inputContainer}>
-	  		<TextInput style={styles.input} keyboardType="email-address" placeholder="Enter your email"/>
-	  		<TextInput style={styles.input} secureTextEntry={true} placeholder="Enter your password"/>
+	  		<TextInput style={styles.input} keyboardType="email-address" placeholder="Enter your email" onChangeText={setEmail}/>
+	  		<TextInput style={styles.input} secureTextEntry={true} placeholder="Enter your password" onChangeText={setPassword}/>
 	  	</View>
 	  	<View style={styles.buttonContainer}>
 	  		<TouchableOpacity onPress={handleLogin} style={styles.button}>
 	  			<Text style={styles.buttonText}>Login</Text>
 	  		</TouchableOpacity>
-	  		<Text>Not yet registered ?</Text>
-	  		<TouchableOpacity style={{ margin: 10, borderWidth: 1, borderColror: 'black', width: '50%' }}>
-	  			<Text style={{ fontSize: 20, textAlign: 'center', padding: 8 }}>Register</Text>
-	  		</TouchableOpacity>
+			<Text>
+				Not yet registered? <TouchableOpacity onPress={() => navigation.navigate('Register')}><Text style={{color: 'blue'}}>Register</Text></TouchableOpacity>
+			</Text>
 	  	</View>
 	  	<StatusBar style="auto" />
     </View>

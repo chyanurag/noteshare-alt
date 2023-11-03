@@ -5,12 +5,6 @@ import { collection, getDocs } from 'firebase/firestore'
 
 
 const Profile = () =>  {
-	useEffect(async () => {
-		const data = await getDocs(collection(db, "users"))
-		data.forEach(doc => {
-			console.log(doc)
-		})
-	}, [])
 	return(
 		<View style={styles.container}>
 			<Text>profile page</Text>

@@ -50,11 +50,11 @@ const App = () => {
 						<Ionicons name={focused ? 'add-circle' : 'add-circle-outline'} size={size} color={color}/>
 					)
 					}}/>
-					<Tab.Screen name="leaderboards" component={Leaderboard} options={{ tabBarLabel : "New", tabBarIcon : ({focused, color, size}) => (
+					<Tab.Screen name="leaderboards" component={Leaderboard} options={{ tabBarLabel : "Leaderboards", tabBarIcon : ({focused, color, size}) => (
 						<Ionicons name={focused ? 'podium' : 'podium-outline'} size={size} color={color}/>
 					)
 					}}/>
-					<Tab.Screen name="profile" component={Profile} options={{ tabBarLabel : "New", tabBarIcon : ({focused, color, size}) => (
+					<Tab.Screen name="profile" component={Profile} options={{ tabBarLabel : "Profile", tabBarIcon : ({focused, color, size}) => (
 						<Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={color}/>
 					)
 					}}/>
